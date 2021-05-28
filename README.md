@@ -1,4 +1,4 @@
-#### Components
+## Components
 A typical Enigma machine is made up of: **KEYBOARD**, **PLUGBOARD**, **STATOR**, **ROTORS**, **REFLECTOR** 
                                         and **LAMP PANEL**.
 Physically, the encryption and the decryption happen due to the flow of the current from one part of the machine to 
@@ -22,7 +22,7 @@ another, in a circuit.
 **LAMP PANEL** => The lamp panel is a retro-illuminated keyboard and it maps each letter in the clear-text to one in
                   the cipher-text.
                   
-#### How it works
+## How it works
 
 Before beginning the encryption process, one must specify to whomever will be responsible for decryption:
 1. The chosen rotors and the order in which they're placed
@@ -38,14 +38,14 @@ It then reaches the **REFLECTOR (UKW)** and travels back through the **ROTORS** 
 and finally hits the **LAMP PANEL**, giving the corresponding letter in the cipher-text. Decryption follows the same 
 pattern.
 
-#### Weaknesses 
+## Weaknesses 
 - A letter cannot be encoded with itself: ***FIXED*** 
 - Double stepping of the rotors: ***FIXED***
 - Letters only swapped in pairs in Mk. III plugboard: ***FIXED*** 
 - The germans used to use a fixed number of cables on the plugboard (10): ***FIXED***
 - Fourth rotor not moving in later editions of the Enigma: ***FIXED***
 
-#### Mathematical Considerations
+## Mathematical Considerations
 I suppose that everything about the system is known (as in [here](https://cryptomuseum.com/crypto/enigma/working.htm)).
 • Plugboard Settings: *26!*
 • Wheel Order: if we consider *n* rotors to pick from, the permutations are expressed as: *n* * *n-1* * *n-2*..., thus *n!*
