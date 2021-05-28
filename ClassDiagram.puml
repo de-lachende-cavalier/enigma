@@ -1,0 +1,175 @@
+@startuml
+
+package components {
+class Rotor {
+    -HashMap<Character, Character> internalRotorWireSetting
+    -int[] tempRandom
+    -Integer rotationCounter
+    --
+    -initArray()
+    +rotate()
+    +reverseRotate()
+    +getRotationCounter()
+    +setRotationCounter()
+    +getInternalRotorWiring()
+    +setInternalRotorWiring()
+    ..
+    +mapWires()
+    +connectInternalWires()
+    +reverseConnectInternalWires()
+}
+
+class RotorStack {
+    -ArrayList<Rotor> rotors
+    --
+    +getRotorNum()
+    +getRotorN()
+}
+
+
+class Stator {
+    -HashMap<Character, Character> internalStatorWiring
+    -int[] tempRandom
+    --
+    -initArray()
+    +getInternalStatorWiring()
+    +setInternalStatorWiring()
+    ..
+    +mapWires()
+    +connectInternalWires()
+    +reverseConnectInternalWires()
+}
+
+class Plugboard {
+    -HashMap<Character, Integer> plugboardWireSetting
+    -int[] tempRandom
+    --
+    -initArray()
+    +getWireSettings()
+    +setWireSettings()
+    ..
+    +mapWires()
+    +connectInternalWires()
+    +reverseConnectInternalWires()
+}
+
+class Reflector {
+    -HashMap<Character, Character> reflectorWiring
+    --
+    -initArray()
+    +getReflectorWiring()
+    +setReflectorWiring()
+    ..
+    +mapWires()
+    +connectInternalWires()
+    +reverseConnectInternalWires()
+}
+
+class RandomnessHandler #LightBlue {
+    -SecureRandom CSPRN
+    +getCSPRN()
+    +shuffleFisherYates()
+}
+}
+
+package director {
+class EnigmaDirector #Bisque {
+    +constructEnigmaMachine(Builder builder)
+}
+}
+
+package builders {
+interface Builder #MOTIVATION {
+    +buildPlugboard()
+    +buildStator()
+    +buildRotors()
+    +buildReflector()
+}
+
+class EnigmaBuilder {
+    -Plugboard plugBoard
+    -Stator stator
+    -RotorStack rotors
+    -Reflector reflector
+    --
+    +getBuiltEnigma()
+    ..
+    +buildPlugboard()
+    +buildStator()
+    +buildRotors()
+    +buildReflector()
+}
+}
+
+class EncryptDecrypt {
+    -EnigmaMachine curMachine
+    -EnigmaConfigManager enigmaConfig
+    -EnigmaDirector director
+    -EnigmaBuilder builder
+    -boolean called
+    -int rotations
+    -handleRotation()
+    +encrypt()
+    +decrypt()
+}
+
+class EnigmaConfigManager {
+-String path
+-boolean extracted
+-boolean configured
++extractConfig()
++configureEnigma()
+}
+
+package product {
+class product.EnigmaMachine #LavenderBlush {
+-Plugboard plugBoard
+-Stator stator
+-RotorStack rotors
+-Reflector reflector
+ +getPlugboard()
+ +getStator()
+ +getReflector()
+ +getRotor()
+ +getUniqRandRotCounter()
+ +setReflector()
+ +setStator()
+ +setRotor()
+ +setPlugboard()
+ +setUniqRandRotCounter()
+}
+}
+
+interface components.WireConnector #MOTIVATION {
+    +mapWires()
+    +connectInternalWires()
+    +reverseConnectInternalWires()
+}
+
+Builder <|.. EnigmaBuilder
+Builder "1" <-left- "1" EnigmaDirector
+EnigmaBuilder "1" --> product.EnigmaMachine : create
+EnigmaDirector o-- Builder
+components.WireConnector <|.. "1" Stator
+components.WireConnector <|.. "1" Plugboard
+components.WireConnector <|.. "1" Reflector
+components.WireConnector <|.. "1" Rotor
+Rotor "1..*" --* "1" RotorStack
+product.EnigmaMachine "1" --- "1" EncryptDecrypt : uses
+EnigmaDirector "1" - "1" EncryptDecrypt : uses
+EnigmaConfigManager "1" -- "1" EncryptDecrypt : uses
+EncryptDecrypt "1" -- "1" EnigmaBuilder : uses
+
+/' all the hidden relationships below are there for formatting
+and style purposes '/
+
+EncryptDecrypt -[hidden] Rotor
+EncryptDecrypt -[hidden]- Builder
+components.WireConnector -[hidden] EnigmaDirector
+Reflector -[hidden]- RotorStack
+Reflector -[hidden]- Rotor
+Plugboard -[hidden]- Rotor
+Stator -[hidden]- Reflector
+Builder -[hidden]- components.WireConnector
+@enduml
+
