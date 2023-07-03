@@ -46,15 +46,16 @@ pattern.
 - Fourth rotor not moving in later editions of the Enigma: ***FIXED***
 
 ## Mathematical Considerations
-I suppose that everything about the system is known (as in [here](https://cryptomuseum.com/crypto/enigma/working.htm)).
-• Plugboard Settings: *26!*
-• Wheel Order: if we consider *n* rotors to pick from, the permutations are expressed as: *n* * *n-1* * *n-2*..., thus *n!*
-• Initial Position of Rotors (Ringstellung): *26^n*, where *n* is the number of rotors.
-A final calculation gives:
-**final_permutations = 26! + n! + 26^n**
-Which, in the case of _n = 5_ rotors, equals _403,291,461,126,605,635,595,881,496_ or 4.03 * 10^26. Taking the log2 we
+I suppose that everything about the system is known (as in [here](https://cryptomuseum.com/crypto/enigma/working.htm)). So:
+- Plugboard Settings: $26!$
+- Wheel Order: if we consider $n$ rotors to pick from, the permutations are expressed as: $n(n-1)(n-2)\cdots1$, thus $n!$
+- Initial Position of Rotors (Ringstellung): $26^n$, where $n$ is the number of rotors.
+  
+A quick calculation gives: final_permutations = $26! + n! + 26^n$.
+
+So, in the case of _n = 5_ rotors, equals _403,291,461,126,605,635,595,881,496_ or $4.03 \times 10^{26}$. Taking the log2 we
 get 88.38195332701626 ~ 89, meaning that we obtain a security level of _89_ bits. Pretty low considering today's
-standards. We can definitely do better. 
+standards. 
 In his book "Applied Cryptography", author Bruce Schneier posits that 128 bits of security are good enough (which means
 we want a cipher with a security level of 256 bits due to collisions), but that book is almost 10 years old now. 
 We can probably accept a collision resistance of 256 bits, which means a preimage resistance of 512 bits, requiring _n = 98_.
@@ -67,5 +68,5 @@ infinity).
 547648150655629812483625524955002232872561810996187209519608848440566963998182650431342872318418496249442601082287578224
 840649800764554653983174626964971418369024591227425552154609443995050491840029053164497164251185704625281864369890695495
 173682798807120601338702468384952883790819187968074077267296442612595131759832071354561068846662930734290361297812412595
-434872430408122140879536788787429376_ (3.06 * 10^615). Using the approximation that 10^3 ~ 2^10, 10^6 ~ 2^20 and so on.
-We get a preimage resistance of ~_2000_ bits (because 10^600 = (10^3)^200 = (2^10)^200).
+434872430408122140879536788787429376_ ($3.06$ * $10^{615}$). Using the approximation that $10^3$ ~ $2^{10}$, $10^6$ ~ $2^{20}$ and so on.
+We get a preimage resistance of ~_2000_ bits (because $10^{600}$ = $(10^3)^{200}$ ~ $(2^{10})^{200}$).
